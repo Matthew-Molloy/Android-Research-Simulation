@@ -1,7 +1,8 @@
 package com.example.matthewmolloy.simulationprototype;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.StrictMode;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,11 @@ public class SimFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-        // create timer
-        timer = new CDT(15000,1000);
+		StrictMode.setThreadPolicy(policy);
+		// create timer
+        timer = new CDT(60000,1000);
         timer.view = view;
 
         // display player info
@@ -36,15 +39,24 @@ public class SimFragment extends Fragment {
         mTextView.setText(Double.toString(MainActivity.player.status));
         mTextView = (TextView) view.findViewById(R.id.resourcesLabel);
         mTextView.setText(Integer.toString(MainActivity.player.resources));
+		mTextView = (TextView) view.findViewById(R.id.infoLabel);
+		mTextView.setText(Integer.toString(MainActivity.player.information));
 
         Button submitButton = (Button) view.findViewById(R.id.submitButton);
         submitButton.setVisibility(View.GONE);
+		Button startButton = (Button) view.findViewById(R.id.startButton);
+		startButton.setVisibility(View.GONE);
+		Button retrieveButton = (Button) view.findViewById(R.id.retrieveButton);
+		retrieveButton.setVisibility(View.GONE);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // return root view
-        return inflater.inflate(R.layout.fragment_main, container, false);
+		View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+		return view;
     }
 }

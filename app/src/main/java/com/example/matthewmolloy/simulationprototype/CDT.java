@@ -15,6 +15,7 @@ public class CDT extends CountDownTimer {
 
     @Override
     public void onFinish() {
+		Player player = MainActivity.player;
 
         ///////////////////////////////////
         // put data submission stuff here//
@@ -27,17 +28,17 @@ public class CDT extends CountDownTimer {
 
 
         // increment turn counter and quarterly give resources
-        MainActivity.player.turnCounter++;
-        if( MainActivity.player.turnCounter % 5 == 0 )
+        player.turnCounter++;
+        if( player.turnCounter % 5 == 0 )
         {
             TextView resourcesDisplay = (TextView) view.findViewById(R.id.resourcesLabel);
 
-            MainActivity.player.resources += 100;
-            resourcesDisplay.setText(Integer.toString(MainActivity.player.resources));
+            player.resources += 100;
+            resourcesDisplay.setText(Integer.toString(player.resources));
         }
 
         // display in console
-        System.out.println(MainActivity.player.printPlayer() + " Turn: " + MainActivity.player.turnCounter);
+        System.out.println(player.printPlayer() + " Turn: " + player.turnCounter);
 
         // reset
         start();

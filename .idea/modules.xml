@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Simulation.iml" filepath="$PROJECT_DIR$/Simulation.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimulationPrototype.iml" filepath="$PROJECT_DIR$/SimulationPrototype.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
