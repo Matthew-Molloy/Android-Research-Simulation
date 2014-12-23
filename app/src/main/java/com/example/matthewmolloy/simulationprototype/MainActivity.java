@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 	public static BufferedWriter dataOut = null;
 	public static BufferedReader dataIn = null;
 	public static final int portNum = 9586;
-	public static final String connectIP = "192.168.1.2";
+	public static String connectIP = "192.168.1.1";
 	public static String toastText;
 	public static int investedRes, initialRes, newRes;
 	public static double initialStatus;
@@ -71,6 +71,10 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 					.hide(historyFragment)
                     .commit();
         }
+
+		// display dialog for IP
+		IPDialogFragment dialog = new IPDialogFragment();
+		dialog.show(getFragmentManager(), "Tag");
 
     }
 

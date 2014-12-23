@@ -5,26 +5,37 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 
 /**
  * Created by matthewmolloy on 12/21/14.
  */
 public class IPDialogFragment extends DialogFragment {
+
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		// Use the Builder class for convenient dialog construction
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setMessage("Enter IP Address of Server")
-				.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						// FIRE ZE MISSILES!
-					}
-				})
-				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						// User cancelled the dialog
-					}
-				});
-		// Create the AlertDialog object and return it
-		return builder.create();
+	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+	// Get the layout inflater
+	LayoutInflater inflater = getActivity().getLayoutInflater();
+
+	// Inflate and set the layout for the dialog
+	// Pass null as the parent view because its going in the dialog layout
+	final View v = (inflater.inflate(R.layout.ip_dialog, null));
+	builder.setView(v).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int id) {
+			EditText mIpEdit = (EditText)v.findViewById(R.id.ipaddress);
+			String s = mIpEdit.getText().toString();
+			MainActivity.connectIP = s;
+		}
+	})
+			.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					IPDialogFragment.this.getDialog().cancel();
+				}
+			});
+	return builder.create();
 	}
 }
