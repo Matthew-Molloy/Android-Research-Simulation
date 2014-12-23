@@ -245,7 +245,7 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 		rewardDisplay.setText( "Reward: " + reward );
 
 		// create history text and add
-		String historyText = (player.turnCounter + " " + investedRes + " " + sharedInfo + " " + reward);
+		String historyText = (player.turnCounter + " " + investedRes + " " + sharedInfo + " " + reward + " ");
 		ListContent.ListItem i = new ListContent.ListItem((Integer.toString(player.turnCounter)), historyText);
 		ListContent.addItem(i);
 

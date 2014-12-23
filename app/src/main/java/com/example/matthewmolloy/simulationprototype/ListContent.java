@@ -1,11 +1,13 @@
 package com.example.matthewmolloy.simulationprototype;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -25,12 +27,14 @@ public class ListContent {
 	static FileInputStream inputStream;
 	static OutputStreamWriter output = null;
 	public static Context c;
+	static String delims = "[ ]+";
 
 	public ListContent(Context c) {
 		this.c = c;
 		try {
-			outputStream = c.openFileOutput(filename, c.MODE_PRIVATE);
+			outputStream = c.openFileOutput(filename, c.MODE_APPEND);
 			inputStream = c.openFileInput(filename);
+			setupItems();
 		} catch (FileNotFoundException e ) {
 			e.printStackTrace();
 		}
@@ -46,35 +50,40 @@ public class ListContent {
      */
     public static Map<String, ListItem> ITEM_MAP = new HashMap<String, ListItem>();
 
-	static {
+	public static void setupItems() {
+		// Add identifier items
 		ListItem i = new ListItem("turn", "   Turn");
 		addNonSplitItem(i);
 		i = new ListItem("invested", "Invested");
 		addNonSplitItem(i);
-		i = new ListItem("shared", "Shared");
+		i = new ListItem("shared", "  Shared");
 		addNonSplitItem(i);
 		i = new ListItem("reward", "Reward");
 		addNonSplitItem(i);
-/*		// retrieve saved moves
-		String ret = "";
 
+		// retrieve saved moves
 		try {
-			inputStream = c.openFileInput(filename);
-
 			if ( inputStream != null ) {
 				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-				String receiveString = "";
-				StringBuilder stringBuilder = new StringBuilder();
+				String receiveString;
+				int ctr = 10000;
 
 				while ( (receiveString = bufferedReader.readLine()) != null ) {
-					stringBuilder.append(receiveString);
-				}
+					// split string
+					receiveString += " ";
+					String[] itemNums = receiveString.split(delims);
 
+					// add items
+					int ii = 0;
+					while( ii < itemNums.length ) {
+						i = new ListItem(Integer.toString(ctr), itemNums[ii]);
+						addNonSplitItem(i);
+						ctr++;
+						ii++;
+					}
+				}
 				inputStream.close();
-				ret = stringBuilder.toString();
-				ListItem i = new ListItem(Integer.toString(MainActivity.player.turnCounter), ret);
-				ITEMS.add(i);
 			}
 		}
 		catch (FileNotFoundException e) {
@@ -82,12 +91,8 @@ public class ListContent {
 		} catch (IOException e) {
 			Log.e("login activity", "Can not read file: " + e.toString());
 		}
-*/
+
 	}
-
-//	public static List<ListItem> readFromFile() {
-
-//	}
 
 	public static void addNonSplitItem(ListItem item) {
 		ITEMS.add(item);
@@ -97,7 +102,6 @@ public class ListContent {
     public static void addItem(ListItem item) {
 		ListItem i;
 
-		String delims = "[ ]+";
 		String[] itemNums = (item.content).split(delims);
 
 		for( int ii = 0; ii < 4; ii++ ) {
@@ -111,24 +115,8 @@ public class ListContent {
 			if( output == null ) {
 				output = new OutputStreamWriter(outputStream);
 			}
-
 			output.write(item.content);
 			output.flush();
-
-			if ( inputStream != null ) {
-				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-				String receiveString = "";
-				StringBuilder stringBuilder = new StringBuilder();
-
-				while ( (receiveString = bufferedReader.readLine()) != null ) {
-					stringBuilder.append(receiveString);
-				}
-
-				// inputStream.close();
-				String ret = stringBuilder.toString();
-				System.out.println(ret);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
