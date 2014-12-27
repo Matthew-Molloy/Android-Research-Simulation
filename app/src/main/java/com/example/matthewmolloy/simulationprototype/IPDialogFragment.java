@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * Created by matthewmolloy on 12/21/14.
- */
 public class IPDialogFragment extends DialogFragment {
 
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,11 +24,10 @@ public class IPDialogFragment extends DialogFragment {
 		@Override
 		public void onClick(DialogInterface dialog, int id) {
 			EditText mIpEdit = (EditText)v.findViewById(R.id.ipaddress);
-			String s = mIpEdit.getText().toString();
-			MainActivity.connectIP = s;
+			MainActivity.connectIP = mIpEdit.getText().toString();
 		}
 	})
-			.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					IPDialogFragment.this.getDialog().cancel();
 				}

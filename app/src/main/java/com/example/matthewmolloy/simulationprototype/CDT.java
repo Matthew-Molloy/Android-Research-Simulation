@@ -17,15 +17,10 @@ public class CDT extends CountDownTimer {
     public void onFinish() {
 		Player player = MainActivity.player;
 
-        ///////////////////////////////////
-        // put data submission stuff here//
-        ///////////////////////////////////
-
         EditText resources = (EditText) view.findViewById(R.id.shareInput);
         EditText invested = (EditText) view.findViewById(R.id.investInput);
         resources.setText("");
         invested.setText("");
-
 
         // increment turn counter and quarterly give resources
         player.turnCounter++;

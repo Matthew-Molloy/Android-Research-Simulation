@@ -23,6 +23,5 @@ public class MyTabListener implements ActionBar.TabListener {
 	}
 
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// nothing done here
 	}
 }

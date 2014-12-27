@@ -15,22 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
 public class ListContent {
 	static String filename = "HistoryFile.txt";
 	static FileOutputStream outputStream;
 	static FileInputStream inputStream;
 	static OutputStreamWriter output = null;
-	public static Context c;
 	static String delims = "[ ]+";
+	Context c;
 
-	public ListContent(Context c) {
-		this.c = c;
+	public ListContent(Context con) {
+		c = con;
 		try {
 			outputStream = c.openFileOutput(filename, c.MODE_APPEND);
 			inputStream = c.openFileInput(filename);

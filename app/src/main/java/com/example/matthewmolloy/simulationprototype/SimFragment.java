@@ -28,6 +28,7 @@ public class SimFragment extends Fragment {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 		StrictMode.setThreadPolicy(policy);
+
 		// create timer
         timer = new CDT(60000,1000);
         timer.view = view;
@@ -55,8 +56,6 @@ public class SimFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // return root view
-		View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-		return view;
+		return inflater.inflate(R.layout.fragment_main, container, false);
     }
 }

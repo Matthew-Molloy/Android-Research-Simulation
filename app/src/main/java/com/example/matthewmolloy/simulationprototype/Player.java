@@ -1,21 +1,14 @@
 package com.example.matthewmolloy.simulationprototype;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author matthewmolloy
- */
 public class Player {
-	public ArrayList<String> turnList;
     public String id;
     public int resources;
     public double status;
     public int information;
     public int turnCounter = 0;
 	public double reward;
-	// public State state;
 
     public Player() {
 
@@ -34,28 +27,13 @@ public class Player {
         this.resources = 100;
         this.status = 100;
         this.information = 100;
-		this.turnList = new ArrayList<String>();
-		// this.state = new State_Neutral();
     }
-
-	// for AI stage
-/*	public void update() {
-		state.execute(this);
-	}
-
-	// for AI stage
-	public void changeState( State newState ) {
-		this.state = newState;
-	}
-*/
 
     public String printPlayer() {
         return ("Player ID: " + id + " Resources Remaining: " + resources + " Status: " + status + "/1" );
     }
 
     public double calculateP(double initialStatus, int invested, int s_server) {
-        // int a = 1;
-        // int b = 1;
 
 		System.out.println(Integer.toString(invested) + " s: " + (Integer.toString(s_server)));
 		double a = invested + s_server;
@@ -64,7 +42,7 @@ public class Player {
 		System.out.println(a);
 		System.out.println(b);
 
-		// double result = (initialStatus - (10 / (1 + Math.exp(s_server + a * invested + b))));
+		// potential formula: double result = (initialStatus - (10 / (1 + Math.exp(s_server + a * invested + b))));
 		double result = a / b;
 		System.out.println(Double.toString(result));
         return result;
@@ -77,14 +55,12 @@ public class Player {
 		double theta = 0.5;
 		double zeta = 0.5;
 
-		// return ( (1 + s_server) * a0 * Math.log( 1 + a1 * invested * (1 + shared)) - (p * Vi)
-		//		- (zeta * (shared*shared)) - (theta * invested));
 		return ( ( 2.5 * shared + s_server) * a0 * Math.log( 1 + a1 * invested) - (p * Vi) - (zeta * (shared*shared)) - (theta * invested) );
 	}
 
     public static String replace(String str, int index, char replace) {
         if(str == null){
-            return str;
+            return null;
         }
 
         else if(index < 0 || index >= str.length()) {
