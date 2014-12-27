@@ -1,4 +1,4 @@
-Android-ResearchSimulation
+Android-Research Simulation
 ==========================
 Research project for work.
 
