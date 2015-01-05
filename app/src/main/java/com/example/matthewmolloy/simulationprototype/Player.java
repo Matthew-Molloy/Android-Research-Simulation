@@ -3,27 +3,26 @@ package com.example.matthewmolloy.simulationprototype;
 import java.util.Random;
 
 public class Player {
-    public String id;
-    public int resources;
-    public double status;
-    public int information;
-    public int turnCounter = 0;
-	public double reward;
+	private String id;
+    private int resources, information;
+	private double status, reward;
+	private int turnCounter = 0;
 
-    public Player() {
+	public Player() {
 
         // generate id
-        int temp, i;
-        String s = "00000";
-        char c;
-        for( i = 0; i < 5; i++ ) {
+        int temp, randomInt;
+        String randomID = "00000";
+        char convertedRandom;
+        for( randomInt = 0; randomInt < 5; randomInt++ ) {
+			// randomize digit
             temp = randInt( 0, 9 );
-            c = Character.forDigit(temp, 10);
-            s = replace(s, i, c);
+			convertedRandom = Character.forDigit(temp, 10);
+            randomID = replace(randomID, randomInt, convertedRandom);
         }
 
         // set data
-        this.id = s;
+        this.id = randomID;
         this.resources = 100;
         this.status = 100;
         this.information = 100;
@@ -75,7 +74,54 @@ public class Player {
     public static int randInt(int min, int max) {
 
         Random rand = new Random();
-
         return rand.nextInt((max - min) + 1) + min;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public int getResources() {
+		return resources;
+	}
+
+	public void setResources(int resources) {
+		this.resources = resources;
+	}
+
+	public double getStatus() {
+		return status;
+	}
+
+	public void setStatus(double status) {
+		this.status = status;
+	}
+
+	public int getInformation() {
+		return information;
+	}
+
+	public void setInformation(int information) {
+		this.information = information;
+	}
+
+	public int getTurnCounter() {
+		return turnCounter;
+	}
+
+	public void setTurnCounter(int turnCounter) {
+		this.turnCounter = turnCounter;
+	}
+
+	public double getReward() {
+		return reward;
+	}
+
+	public void setReward(double reward) {
+		this.reward = reward;
+	}
 }

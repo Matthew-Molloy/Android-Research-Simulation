@@ -23,19 +23,16 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends ActionBarActivity implements HistoryFragment.OnFragmentInteractionListener {
 
-		public void onFragmentInteraction(String position) {
-		}
+	public void onFragmentInteraction(String position) {}
 
-    public static Player player = new Player();
+    static Player player = new Player();
 	static Socket sock = null;
 	static BufferedWriter dataOut = null;
 	static BufferedReader dataIn = null;
 	static final int portNum = 9586;
 	static String connectIP = "192.168.1.2";
-	static int investedRes, initialRes, newRes;
 	static double initialStatus;
-	static int sharedInfo, initialInfo, newInfo;
-	static int rowIndex;
+	static int investedRes, initialRes, newRes, sharedInfo, initialInfo, newInfo, rowIndex;
 	static HistoryFragment historyFragment = new HistoryFragment();
 	static SimFragment simFragment = new SimFragment();
 	static ListContent historyList;
@@ -91,6 +88,7 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 			dataOut = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
 			dataIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
+			// read in row index
 			String input = dataIn.readLine();
 			rowIndex = Integer.parseInt(input);
 
@@ -111,24 +109,12 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
         EditText mInvestEdit = (EditText)findViewById(R.id.investInput);
 		Button submitButton = (Button) findViewById(R.id.submitButton);
 		Button retrieveButton = (Button) findViewById(R.id.retrieveButton);
+		String investVal, shareVal, temp;
 
 		int statusDamage = 0;
 
-		// TextView mTimerView = (TextView) view.findViewById(R.id.timer);
-
-		// grab seconds left
-		/*
-		String delims = "[ ]+";
-		String[] timerSplit = new String[5];
-		String timerText = mTimerView.getText().toString();
-		timerSplit = timerText.split(delims);
-		String secondsLeft = timerSplit[2];
-		*/
-
         // grab values
-        String shareVal;
         shareVal = mShareEdit.getText().toString();
-        String investVal;
         investVal = mInvestEdit.getText().toString();
 
         if( !(shareVal.equals("")) && !(investVal.equals("")) )
@@ -140,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 
             // take in resource values
             investedRes = Integer.parseInt(investVal);
-            String temp = resourcesDisplay.getText().toString();
+            temp = resourcesDisplay.getText().toString();
             initialRes = Integer.parseInt(temp);
             newRes = initialRes - investedRes;
 
@@ -163,19 +149,19 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 				// stop timer
 				SimFragment.timer.cancel();
 
-				if (player.turnCounter % 19 == 1) {
+				if (player.getTurnCounter() % 19 == 1) {
 					statusDamage = 5;
 				}
 
 				// update player
-				player.status = player.status - statusDamage;
-				player.resources = newRes;
-				player.turnCounter++;
-				player.information = newInfo;
+				player.setStatus(player.getStatus() - statusDamage);
+				player.setResources(newRes);
+				player.setTurnCounter(player.getTurnCounter() + 1);
+				player.setInformation(newInfo);
 				player.printPlayer();
 
 				// send data to server
-				String serverInfo = (player.id + " " + investedRes + " " + initialRes + " " + newRes
+				String serverInfo = (player.getId() + " " + investedRes + " " + initialRes + " " + newRes
 						+ " " + sharedInfo + " " + initialInfo + " " + newInfo + " " + rowIndex );
 
 				try {
@@ -228,24 +214,26 @@ public class MainActivity extends ActionBarActivity implements HistoryFragment.O
 		}
 
 		// update player
-		double p = player.calculateP( initialStatus, investedRes, s_server );
-		player.reward = (player.calculateReward( p, investedRes, sharedInfo, s_server )) / 100;
+		double p, newReward;
+		p = player.calculateP( initialStatus, investedRes, s_server );
+		newReward = (player.calculateReward( p, investedRes, sharedInfo, s_server )) / 100;
+		player.setReward(newReward);
 
 		// submit success, update display data (resources, status)
 		DecimalFormat numberFormat = new DecimalFormat("#.00");
-		String status = numberFormat.format(player.status);
+		String status = numberFormat.format(player.getStatus());
 		statusDisplay.setText(status);
-		statusBar.setProgress( (int) player.status );
-		resourcesDisplay.setText(Integer.toString(player.resources));
+		statusBar.setProgress( (int) player.getStatus() );
+		resourcesDisplay.setText(Integer.toString(player.getResources()));
 		infoDisplay.setText(Integer.toString(newInfo));
 
-		String reward = numberFormat.format(player.reward);
+		String reward = numberFormat.format(newReward);
 		rewardDisplay.setText( "Reward: " + reward );
 
 		// create history text and add
-		String historyText = (player.turnCounter + " " + investedRes + " " + sharedInfo + " " + reward + " ");
-		ListContent.ListItem i = new ListContent.ListItem((Integer.toString(player.turnCounter)), historyText);
-		ListContent.addItem(i);
+		String historyText = (player.getTurnCounter() + " " + investedRes + " " + sharedInfo + " " + reward + " ");
+		ListContent.ListItem item = new ListContent.ListItem((Integer.toString(player.getTurnCounter())), historyText);
+		ListContent.addItem(item);
 
 		// reset timer
 		SimFragment.timer.start();

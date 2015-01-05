@@ -69,12 +69,9 @@ public class ListContent {
 					String[] itemNums = receiveString.split(delims);
 
 					// add items
-					int ii = 0;
-					while( ii < itemNums.length ) {
-						i = new ListItem(Integer.toString(ctr), itemNums[ii]);
+					for( int index = 0; index < itemNums.length; index++, ctr++ ) {
+						i = new ListItem(Integer.toString(ctr), itemNums[index]);
 						addNonSplitItem(i);
-						ctr++;
-						ii++;
 					}
 				}
 				inputStream.close();
@@ -98,8 +95,8 @@ public class ListContent {
 
 		String[] itemNums = (item.content).split(delims);
 
-		for( int ii = 0; ii < 4; ii++ ) {
-			i = new ListItem(item.id, itemNums[ii]);
+		for( int index = 0; index < 4; index++ ) {
+			i = new ListItem(item.id, itemNums[index]);
 			ITEMS.add(i);
 			ITEM_MAP.put(i.id, i);
 		}

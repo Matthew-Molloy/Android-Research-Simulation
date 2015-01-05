@@ -28,20 +28,20 @@ public class SimFragment extends Fragment {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 		StrictMode.setThreadPolicy(policy);
-
+		Player player = MainActivity.player;
 		// create timer
         timer = new CDT(60000,1000);
         timer.view = view;
 
         // display player info
         TextView mTextView = (TextView) view.findViewById(R.id.idLabel);
-        mTextView.setText(MainActivity.player.id);
+        mTextView.setText(player.getId());
         mTextView = (TextView) view.findViewById(R.id.statusLabel);
-        mTextView.setText(Double.toString(MainActivity.player.status));
+        mTextView.setText(Double.toString(player.getStatus()));
         mTextView = (TextView) view.findViewById(R.id.resourcesLabel);
-        mTextView.setText(Integer.toString(MainActivity.player.resources));
+        mTextView.setText(Integer.toString(player.getResources()));
 		mTextView = (TextView) view.findViewById(R.id.infoLabel);
-		mTextView.setText(Integer.toString(MainActivity.player.information));
+		mTextView.setText(Integer.toString(player.getInformation()));
 
         Button submitButton = (Button) view.findViewById(R.id.submitButton);
         submitButton.setVisibility(View.GONE);

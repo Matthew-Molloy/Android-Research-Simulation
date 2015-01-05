@@ -23,17 +23,17 @@ public class CDT extends CountDownTimer {
         invested.setText("");
 
         // increment turn counter and quarterly give resources
-        player.turnCounter++;
-        if( player.turnCounter % 5 == 0 )
+        player.setTurnCounter(player.getTurnCounter() + 1);
+        if( player.getTurnCounter() % 5 == 0 )
         {
             TextView resourcesDisplay = (TextView) view.findViewById(R.id.resourcesLabel);
 
-            player.resources += 100;
-            resourcesDisplay.setText(Integer.toString(player.resources));
+            player.setResources(player.getResources() + 100);
+            resourcesDisplay.setText(Integer.toString(player.getResources()));
         }
 
         // display in console
-        System.out.println(player.printPlayer() + " Turn: " + player.turnCounter);
+        System.out.println(player.printPlayer() + " Turn: " + player.getTurnCounter());
 
         // reset
         start();
