@@ -15,3 +15,11 @@ Instructions for Running:
 4. Android clients can connect and start the simulation from there
 
 5. Clients should try to hit the start button at the same time. Retrieve action won't go through until ALL clients have submitted for that round
+
+Pictures:
+
+http://matthew-molloy.github.io/images/simConnect.png
+
+http://matthew-molloy.github.io/images/simHistory.png
+
+http://matthew-molloy.github.io/images/simReward.png
